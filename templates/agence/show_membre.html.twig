@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BlogController!{% endblock %}
+
+{% block body %}
+<div class="card mb-3 text-center">
+  <h3 class="card-header"> {{ membre.pseudo }} </h3>
+  <div class="card-body">
+    <h5 class="card-title">{{ membre.prenom }} {{ membre.nom }}</h5>
+    <h5 class="card-title"> {{ membre.email }} </h5>
+  </div>
+  <div class="card-body">
+  <p class="card-header"> genre : {{ membre.civilite }} </p>
+  </div>
+  <div class="card-footer text-muted">
+    (Membre depuis le {{ membre.dateenregistrement|date("d/m/Y à H:i:s") }})
+  </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+BackOffice
+{% endblock %}
+
+{% block body %}
+
+{# {% for message in app.flashes('success') %}
+    <div class="alert alert-success text-center">{{ message }}</div>
+{% endfor %} #}
+<table class="table table-bordered text-center">
+    <thead>
+        <tr>
+            <th>Commande</th>
+            <th>Membre</th>
+            <th>Vehicule</th>
+            <th>date et heure de départ</th>
+            <th>date et heure de fin</th>
+            <th>Prix total</th>
+            <th>date d'Enregistrement</th>
+            <th>actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for commande in commandes %}
+        <tr>
+            <td>{{ commande.id }}</td>
+            <td>{{ commande.idmembre.id}} - {{ commande.idmembre.prenom}} - {{ commande.idmembre.nom}} - {{ commande.idmembre.email}}</td>
+            <td>{{ commande.idvehicule.id}} - {{ commande.idvehicule.marque}} - {{ commande.idvehicule.modele}}</td>
+            <td>{{ commande.dateheuredepart|date('d/m/Y - H:i')}}</td>
+            <td>{{ commande.dateheurefin|date('d/m/Y - H:i')}}</td>
+            <td>{{ commande.prixtotal}} €</td>
+            <td>{{ commande.dateenregistrement|date('d/m/Y à H:i:s') }}</td>
+            <td>
+            <a href="{{ path('commande_show',{id: commande.id}) }}"><i class="fas fa-glasses"></i></a>
+            <a href="{{ path('admin_edit_commande',{id: commande.id}) }}"><i class="fas fa-edit"></i></a>
+            <a onclick="return confirm('voulez-vous supprimer cet commande ?')" href="{{ path('admin_delete_commande',{id: commande.id}) }}"><i class="fas fa-trash"></i></a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{{form_start(formCommande, {
+    attr: {
+        novalidate: 'novalidate'
+    }
+})}}
+<div class="row d-flex justify-content-evenly">
+<div class="col-md-4">
+{{form_row(formCommande.id_membre)}}
+</div>
+<div class="col-md-4">
+{{form_row(formCommande.id_vehicule)}}
+</div>
+<div class="col-md-4">
+{{form_row(formCommande.prix_total)}}
+</div>
+<div class="col-md-4">
+{{form_row(formCommande.date_heure_depart)}}
+</div>
+<div class="col-md-4">
+{{form_row(formCommande.date_heure_fin)}}
+</div>
+</div>
+
+<button type="submit" class="btn btn-primary mt-2">
+{% if editMode %}
+    Enregistrer les modifications
+{% else %}
+    Ajouter la commande
+{% endif %}
+</button>
+
+{{form_end(formCommande)}}
+
+
+{% endblock %}

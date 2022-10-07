@@ -1,0 +1,79 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+BackOffice
+{% endblock %}
+
+{% block body %}
+
+{# {% for message in app.flashes('success') %}
+    <div class="alert alert-success text-center">{{ message }}</div>
+{% endfor %} #}
+<table class="table table-bordered text-center">
+    <thead>
+        <tr>
+            {% for colonne in colonnes %}
+                <th>{{ colonne }}</th>
+            {% endfor %}
+            <th>actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for vehicule in vehicules %}
+        <tr>
+            <td>{{ vehicule.id }}</td>
+            <td>{{ vehicule.title}}</td>
+            <td>{{ vehicule.marque}}</td>
+            <td>{{ vehicule.modele}}</td>
+            <td>{{ vehicule.description}}</td>
+            <td><img src="{{ vehicule.photo }}" style="width: 150px;" alt=""></td>
+            <td>{{ vehicule.prixJournalier}} €</td>
+            <td>{{ vehicule.dateEnregistrement|date('d/m/Y à H:i:s') }}</td>
+            <td>
+            <a href="{{ path('vehicule_show',{id: vehicule.id}) }}"><i class="fas fa-glasses"></i></a>
+            <a href="{{ path('admin_edit_vehicule',{id: vehicule.id}) }}"><i class="fas fa-edit"></i></a>
+            <a onclick="return confirm('voulez-vous supprimer cet vehicule ?')" href="{{ path('admin_delete_vehicule',{id: vehicule.id}) }}"><i class="fas fa-trash"></i></a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{{form_start(formVehicule, {
+    attr: {
+        novalidate: 'novalidate'
+    }
+})}}
+<div class="row d-flex justify-content-evenly">
+<div class="col-md-12">
+{{form_row(formVehicule.title)}}
+</div>
+<div class="col-md-6">
+{{form_row(formVehicule.marque)}}
+</div>
+<div class="col-md-6">
+{{form_row(formVehicule.modele)}}
+</div>
+<div class="col-md-12">
+{{form_row(formVehicule.description)}}
+</div>
+<div class="col-md-6">
+{{form_row(formVehicule.photo)}}
+</div>
+<div class="col-md-6">
+{{form_row(formVehicule.prix_journalier)}}
+</div>
+</div>
+
+<button type="submit" class="btn btn-primary mt-2">
+{% if editMode %}
+    Enregistrer les modifications
+{% else %}
+    Ajouter le vehicule
+{% endif %}
+</button>
+
+{{form_end(formVehicule)}}
+
+
+{% endblock %}

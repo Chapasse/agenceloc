@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma commande!{% endblock %}
+
+{% block body %}
+<div class="card mb-3 text-center">
+  <h3 class="card-header">Commande n° {{ commande.id }} </h3>
+  <div class="card-body">
+    <h5 class="card-title">{{ commande.idmembre.prenom}} - {{ commande.idmembre.nom}} - {{ commande.idmembre.email}} </h5>
+    <h5 class="card-title"> {{ commande.idvehicule.marque}} - {{ commande.idvehicule.modele}} </h5>
+  </div>
+  <div class="card-body">
+  <p class="card-header"> début de réservation le {{ commande.dateheuredepart|date("d/m/Y à H:i") }} </p>
+  <p class="card-header"> fin de réservation le {{ commande.dateheurefin|date("d/m/Y à H:i") }} </p>
+  </div>
+  <div class="card-footer text-muted">
+    (Commande passée le {{ commande.dateenregistrement|date("d/m/Y à H:i:s") }})
+  </div>
+</div>
+
+
+
+{% endblock %}

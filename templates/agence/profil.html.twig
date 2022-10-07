@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BlogController!{% endblock %}
+
+{% block body %}
+
+<h1>Mon profil</h1>
+<div class="card mb-3 text-center">
+  <h3 class="card-header"> {{ app.user.pseudo }} </h3>
+  <div class="card-body">
+    <h5 class="card-title">{{ app.user.prenom }} {{ app.user.nom }}</h5>
+    <h5 class="card-title"> {{ app.user.email }} </h5>
+  </div>
+  <div class="card-body">
+  <p class="card-header"> genre : {{ app.user.civilite }} </p>
+  </div>
+  <div class="card-footer text-muted">
+    (Membre depuis le {{ app.user.dateenregistrement|date("d/m/Y à H:i:s") }})
+  </div>
+</div>
+
+
+<h2>Mes commandes</h2>
+{% for commande in commandes %}
+    {% if commande.idMembre.id == app.user.id %}
+        <div class="card border-info mb-3 text-center">
+            <div class="card-header">
+                <h3>Commande du {{commande.dateEnregistrement|date("d/m/Y à H:i:s")}}</h3>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">{{commande.idvehicule.title}}</h4>
+                <p class="card-text">
+                -heure de départ : {{commande.dateheuredepart|date("d/m/Y à H:i")}}<br>
+                -heure de fin : {{commande.dateheurefin|date("d/m/Y à H:i")}}
+                </p>
+                <div class="container">
+                <p>{{commande.idvehicule.marque}} {{commande.idvehicule.modele}}</p>
+                <img src="{{commande.idvehicule.photo}}" alt="Photo du vehicule à louer" width="50%">
+                <p>prix total : {{commande.prixtotal}} €</p>
+                </div>
+            </div>
+        </div>    
+    
+    {% endif %}
+
+{% endfor %}
+
+{% endblock %}

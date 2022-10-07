@@ -1,0 +1,90 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+BackOffice
+{% endblock %}
+
+{% block body %}
+
+{# {% for message in app.flashes('success') %}
+    <div class="alert alert-success text-center">{{ message }}</div>
+{% endfor %} #}
+<table class="table table-bordered text-center">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>Pseudo</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Email</th>
+            <th>civilité</th>
+            <th>Statut</th>
+            <th>date d'enregistrement</th>
+            <th>actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for membre in membres %}
+        <tr>
+            <td>{{ membre.id }}</td>
+            <td>{{ membre.pseudo}}</td>
+            <td>{{ membre.nom}}</td>
+            <td>{{ membre.prenom}}</td>
+            <td>{{ membre.email}}</td>
+            <td>{{ membre.civilite}}</td>
+            <td>{{ membre.roles.0}}</td>
+            <td>{{ membre.dateEnregistrement|date('d/m/Y à H:i:s') }}</td>
+            <td>
+            <a href="{{ path('membre_show',{id: membre.id}) }}"><i class="fas fa-glasses"></i></a>
+            <a href="{{ path('admin_edit_membre',{id: membre.id}) }}"><i class="fas fa-edit"></i></a>
+            <a onclick="return confirm('voulez-vous supprimer cet membre ?')" href="{{ path('admin_delete_membre',{id: membre.id}) }}"><i class="fas fa-trash"></i></a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{{form_start(formMembre, {
+    attr: {
+        novalidate: 'novalidate'
+    }
+})}}
+<div class="row d-flex justify-content-around">
+<div class="col-md-6">
+{{form_row(formMembre.pseudo)}}
+
+</div>
+<div class="col-md-6">
+{{form_row(formMembre.plainPassword, {
+            label: 'Password'
+        })}}
+</div>
+<div class="col-md-6">
+{{form_row(formMembre.nom)}}
+</div>
+<div class="col-md-6">
+{{form_row(formMembre.prenom)}}
+</div>
+<div class="col-md-12">
+{{form_row(formMembre.email)}}
+</div>
+<div class="col-md-6">
+{{form_row(formMembre.civilite)}}
+</div>
+<div class="col-md-6">
+{{form_row(formMembre.roles)}}
+</div>
+</div>
+
+<button type="submit" class="btn btn-primary mt-2">
+{% if editMode %}
+    Enregistrer les modifications
+{% else %}
+    Ajouter le membre
+{% endif %}
+</button>
+
+{{form_end(formMembre)}}
+
+
+{% endblock %}

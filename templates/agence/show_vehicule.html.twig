@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BlogController!{% endblock %}
+
+{% block body %}
+<div class="card mb-3 text-center">
+  <h3 class="card-header"> {{ item.title }} </h3>
+  <div class="card-body">
+    <h5 class="card-title">{{ item.marque }} {{ item.modele }}</h5>
+    <h5 class="card-title"> Prix Journalier {{ item.prixjournalier }} € </h5>
+  </div>
+  <div class="text-center">
+    <img src="{{ item.photo }}" alt="" width="50%" height="50%">
+  </div>
+  <div class="card-body">
+  <p class="card-header"> Description : </p>
+    <p class="card-text"> {{ item.description }} </p>
+  </div>
+  <div class="card-footer text-muted">
+    (Ajoutée le {{ item.dateenregistrement|date("d/m/Y à H:i:s") }})
+  </div>
+{% if app.user %}
+  
+{{form_start(formCommande, {
+    attr: {
+        novalidate: 'novalidate'
+    }
+})}}
+<div class="row d-flex justify-content-evenly">
+<div class="col-md-3">
+{{form_row(formCommande.date_heure_depart)}}
+</div>
+<div class="col-md-3">
+{{form_row(formCommande.date_heure_fin)}}
+</div>
+</div>
+<button type="submit" class="btn btn-primary mt-2">
+    Commander
+</button>
+
+{{form_end(formCommande)}}
+{% else %}
+<p><a href="{{path('app_login')}}">Connectez-vous</a> pour commander</p>
+  
+{% endif %}
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AgenceController!{% endblock %}
+
+{% block body %}
+<div class="container m-4 "> 
+{% for item in vehicules %}
+<div class="card text-white mb-3 mx-auto "
+style="max-width: 20rem;">
+  <div class="card-header text-center"> {{ item.title }} </div>
+  <div class="card-body text-center">
+    <h4 class="card-title"> {{ item.marque }} {{item.modele}}</h4>
+    <img class="text-center" src="{{ item.photo }}" alt="" width="200px">
+    <p class="card-text"> {{ item.description }} </p>
+    <hr>
+    <p>Prix Journalier : {{ item.prixjournalier }} €</p>
+
+    <a href="{{path('vehicule_show', {id:item.id})}}" class="btn btn-success">Voire et commander</a>
+  </div>
+</div>
+{% endfor %}
+</div>
+
+
+{% endblock %}
