@@ -42,10 +42,17 @@ class AgenceController extends AbstractController
         {
             $debut=$commande->getDateHeureDepart();
             $fin=$commande->getDateHeureFin();
+
             $interval = $debut->diff($fin);
             $days=$interval->days;
             $prix = $vehicule->getPrixJournalier();
             $prix = $prix * $days;
+
+            if($prix < 0)
+            {
+                $this->addFlash('warning', "votre commande n'a pas été validé, vous avez choisie une date de fin antérieur la date de début");
+                return $this->redirectToRoute('vehicule_show');
+            }
             $commande->setPrixTotal($prix);
             $commande->setDateEnregistrement(new \DateTime);
             $commande->setIdVehicule($vehicule);
