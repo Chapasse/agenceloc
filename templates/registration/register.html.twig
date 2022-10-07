@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}inscription{% endblock %}
 
 {% block body %}
     <h1>Register</h1>
@@ -16,6 +16,6 @@
         {{form_row(registrationForm.civilite)}}
         {# {{ form_row(registrationForm.agreeTerms) }} #}
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn btn-info">Inscrivez-vous</button>
     {{ form_end(registrationForm) }}
 {% endblock %}

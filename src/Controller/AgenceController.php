@@ -40,29 +40,20 @@ class AgenceController extends AbstractController
         
         if($form->isSubmitted() && $form->isValid())
         {
-            $table = $globals->request->get("commande_post");
-            $tableOrigin = $table["date_heure_depart"]['date'];
-            $origin = $tableOrigin["year"] . "-" . $tableOrigin["month"] . "-" . $tableOrigin["day"];
-            $origin = date_create($origin);
-            $tableTarget = $table["date_heure_fin"]['date'];
-            $target = $tableTarget["year"] . "-" . $tableTarget["month"] . "-" . $tableTarget["day"];
-            $target = date_create($target);
-            $commande->setDateEnregistrement(new \DateTime);
-            $interval = date_diff($origin, $target);;
+            $debut=$commande->getDateHeureDepart();
+            $fin=$commande->getDateHeureFin();
+            $interval = $debut->diff($fin);
+            $days=$interval->days;
             $prix = $vehicule->getPrixJournalier();
-            // $interval = $interval->format('d');
-            $interval = ($interval->d) + ($interval->m) *30 + ($interval->y) *364 ;
-            $prix = $prix * $interval;
+            $prix = $prix * $days;
             $commande->setPrixTotal($prix);
+            $commande->setDateEnregistrement(new \DateTime);
             $commande->setIdVehicule($vehicule);
             $commande->setIdMembre($this->getUser());
             $manager->persist($commande);
             $manager->flush();
             $this->addFlash('success', "votre commande a bien été accepté");
             return $this->redirectToRoute('app_agence');
-            // return $this->redirectToRoute('vehicule_show', [
-            //     'id' => $vehicule->getId()
-            // ]);        
         }
         return $this->renderForm('agence/show_vehicule.html.twig', [
             'item' => $vehicule,

@@ -3,7 +3,9 @@
 {% block title %}BackOffice{% endblock %}
 
 {% block body %}
-<h1 class="display-4 text-center my-4"><a href="{{path('admin_vehicules')}}">Gestion des vehicules</a></h1>
-<h1 class="display-4 text-center my-4"><a href="{{path('admin_membres')}}">Gestion des membres</a></h1>
-<h1 class="display-4 text-center my-4"><a href="{{path('admin_commandes')}}">Gestion des commandes</a></h1>
+<div class="container border border-primary mt-4">
+<h2 class="display-4 text-center my-4"><a href="{{path('admin_vehicules')}}">Gestion des vehicules</a></h2>
+<h2 class="display-4 text-center my-4"><a href="{{path('admin_membres')}}">Gestion des membres</a></h2>
+<h2 class="display-4 text-center my-4"><a href="{{path('admin_commandes')}}">Gestion des commandes</a></h2>
+</div>
 {% endblock %}

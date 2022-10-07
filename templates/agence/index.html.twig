@@ -1,11 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AgenceController!{% endblock %}
+{% block title %}AgenceLoc{% endblock %}
 
 {% block body %}
+  <div class="container border border-info text-white mt-2">
+{% if app.user %}
+  <h2>Bienvenue sur notre site {{app.user.pseudo}}, une nouvelle location de prévue ? Nous avons surement le véhicule qu'il vous faut !</h2>
+{% else %}
+  <h2>Bienvenue sur notre site, connectez-vous pour louer la voiture de vos rêve !</h2>
+{% endif %}
+  </div>
+
 <div class="container m-4 "> 
 {% for item in vehicules %}
-<div class="card text-white mb-3 mx-auto "
+<div class="card text-white mb-3 mx-auto"
 style="max-width: 20rem;">
   <div class="card-header text-center"> {{ item.title }} </div>
   <div class="card-body text-center">
